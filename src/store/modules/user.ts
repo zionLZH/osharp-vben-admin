@@ -107,12 +107,12 @@ export const useUserStore = defineStore({
         const { goHome = true, mode, ...loginParams } = params
         const data = await Token(loginParams, mode)
         let token
-        if (data.AccessToken) {
-          token = data
+        if (data.Data.AccessToken) {
+          token = data.Data
         } else {
-          const tokenKey = findKey(data, (o) => o.AccessToken)
+          const tokenKey = findKey(data.Data, (o) => o.AccessToken)
           if (tokenKey) {
-            token = data[tokenKey]
+            token = data.Data[tokenKey]
           } else {
             return Promise.reject()
           }
