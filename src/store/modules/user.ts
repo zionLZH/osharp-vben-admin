@@ -149,20 +149,24 @@ export const useUserStore = defineStore({
       return userInfo
     },
     async getUserInfoAction(): Promise<UserInfo> {
-      const userInfo = await Profile()
-      if (!userInfo) {
+      try {
+        const userInfo = await Profile()
+        if (!userInfo) {
+          return {} as any
+        }
+        const { Roles = [] } = userInfo
+        if (isArray(Roles)) {
+          // const roleList = roles.map((item) => item.value) as RoleEnum[]
+          this.setRoleList(Roles)
+        } else {
+          userInfo.Roles = []
+          this.setRoleList([])
+        }
+        this.setUserInfo(userInfo)
+        return userInfo
+      } catch (e) {
         return {} as any
       }
-      const { Roles = [] } = userInfo
-      if (isArray(Roles)) {
-        // const roleList = roles.map((item) => item.value) as RoleEnum[]
-        this.setRoleList(Roles)
-      } else {
-        userInfo.Roles = []
-        this.setRoleList([])
-      }
-      this.setUserInfo(userInfo)
-      return userInfo
     },
     async getUserModulesAction(): Promise<string[]> {
       const userModules = await GetAuthinfo()
