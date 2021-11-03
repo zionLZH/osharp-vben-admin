@@ -149,6 +149,10 @@ export const useUserStore = defineStore({
       return userInfo
     },
     async getUserInfoAction(): Promise<UserInfo> {
+      const { RefreshToken, AccessToken } = this.getToken as any
+      if (!RefreshToken || !AccessToken) {
+        return {} as any
+      }
       try {
         const userInfo = await Profile()
         if (!userInfo) {
