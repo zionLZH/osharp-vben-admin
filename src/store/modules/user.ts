@@ -184,13 +184,18 @@ export const useUserStore = defineStore({
       }
       refreshTokenHolder = new Promise(async (next: any) => {
         const { RefreshToken } = this.getToken as any
-        const { Data: newToken } = await Token({
-          GrantType: 'refresh_token',
-          RefreshToken: RefreshToken,
-        })
-        this.setToken(newToken)
-        next()
-        refreshTokenHolder = null
+        try {
+          const { Data: newToken } = await Token({
+            GrantType: 'refresh_token',
+            RefreshToken: RefreshToken,
+          })
+          this.setToken(newToken)
+          next()
+        } catch (e) {
+          refreshTokenHolder = null
+          this.setToken(undefined)
+          this.logout()
+        }
       })
       await refreshTokenHolder
     },
