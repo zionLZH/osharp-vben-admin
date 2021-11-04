@@ -10,7 +10,6 @@ import { useGlobSetting } from '/@/hooks/setting'
 import { useMessage } from '/@/hooks/web/useMessage'
 import { ContentTypeEnum, RequestEnum, ResultEnum } from '/@/enums/httpEnum'
 import { isString } from '/@/utils/is'
-import { getToken } from '/@/utils/auth'
 import { deepMerge, setObjToUrlParams } from '/@/utils'
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog'
 import { useI18n } from '/@/hooks/web/useI18n'
@@ -143,7 +142,8 @@ const transform: AxiosTransform = {
    */
   requestInterceptors: (config, options) => {
     // 请求之前处理config
-    const token = <any>getToken()
+    !userStore && (userStore = useUserStoreWithOut())
+    const token = <any>userStore.getToken
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       const { AccessToken } = token
