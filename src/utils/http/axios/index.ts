@@ -175,7 +175,7 @@ const transform: AxiosTransform = {
       response.status === 401 &&
       (config?.data ? config?.data.indexOf('refresh_token') < 0 : true)
     ) {
-      if (config.url.indexOf('/Token') >= 0) {
+      if (config.url.indexOf('Token') < 0 && config.url.indexOf('/Profile') < 0) {
         const currentDateTime = new Date().getTime()
         !userStore && (userStore = useUserStoreWithOut())
         const { RefreshToken, RefreshUctExpires } = userStore.getToken as any
