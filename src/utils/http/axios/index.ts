@@ -175,16 +175,18 @@ const transform: AxiosTransform = {
       response.status === 401 &&
       (config?.data ? config?.data.indexOf('refresh_token') < 0 : true)
     ) {
-      const currentDateTime = new Date().getTime()
-      !userStore && (userStore = useUserStoreWithOut())
-      const { RefreshToken, RefreshUctExpires } = userStore.getToken as any
-      if (RefreshToken && currentDateTime <= RefreshUctExpires) {
-        await userStore.refreshUserToken()
-        const authenticationScheme = config.headers.Authorization.split(' ')[0]
-        // @ts-ignore
-        const newConfig = transform.requestInterceptors(config, { authenticationScheme })
-        // @ts-ignore
-        return await createAxios().axiosInstance.request(newConfig)
+      if (config.url.indexOf('/Token') >= 0) {
+        const currentDateTime = new Date().getTime()
+        !userStore && (userStore = useUserStoreWithOut())
+        const { RefreshToken, RefreshUctExpires } = userStore.getToken as any
+        if (RefreshToken && currentDateTime <= RefreshUctExpires) {
+          await userStore.refreshUserToken()
+          const authenticationScheme = config.headers.Authorization.split(' ')[0]
+          // @ts-ignore
+          const newConfig = transform.requestInterceptors(config, { authenticationScheme })
+          // @ts-ignore
+          return await createAxios().axiosInstance.request(newConfig)
+        }
       }
     }
     let errorMessageMode = config?.requestOptions?.errorMessageMode || 'none'
