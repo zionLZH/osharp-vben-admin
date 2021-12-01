@@ -194,7 +194,7 @@ export const useUserStore = defineStore({
         } catch (e) {
           refreshTokenHolder = null
           this.setToken(undefined)
-          this.logout()
+          // this.logout()
         }
       })
       await refreshTokenHolder
