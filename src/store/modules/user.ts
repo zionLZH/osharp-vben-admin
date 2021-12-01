@@ -220,6 +220,8 @@ export const useUserStore = defineStore({
       this.setRoleList([])
       this.setModules([])
       this.setSessionTimeout(false)
+      // TODO 如果出现需要多站点后台管理的，并且token刷新过期的，请改为location.reload
+      // goLogin && location.reload(true)
       goLogin && router.push(PageEnum.BASE_LOGIN)
     },
 

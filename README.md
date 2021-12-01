@@ -64,6 +64,32 @@ yarn serve
 yarn build
 ```
 
+## 注意
+
+对于需要进行多站点后台管理的，需要开启多个子站点 Tabs 的请自行处理 src/store/modules/user.ts 中的 TODO
+
+```
+/**
+ * @description: logout
+ */
+async logout(goLogin = false) {
+  if (this.getToken) {
+    try {
+      await Logout()
+    } catch {
+      console.log('注销Token失败')
+    }
+  }
+  this.setToken(undefined)
+  this.setRoleList([])
+  this.setModules([])
+  this.setSessionTimeout(false)
+  // TODO 如果出现需要多站点后台管理的，并且token刷新过期的，请改为location.reload
+  // goLogin && location.reload(true)
+  goLogin && router.push(PageEnum.BASE_LOGIN)
+},
+```
+
 ## 如何贡献
 
 非常欢迎你的加入！[提一个 Issue](https://github.com/zionLZH/osharp-vben-admin/issues/new/choose) 或者提交一个 Pull Request。
