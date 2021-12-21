@@ -179,7 +179,7 @@ const transform: AxiosTransform = {
         const currentDateTime = new Date().getTime()
         !userStore && (userStore = useUserStoreWithOut())
         const { RefreshToken, RefreshUctExpires } = userStore.getToken as any
-        if (RefreshToken && currentDateTime <= RefreshUctExpires / 1000) {
+        if (RefreshToken && currentDateTime <= RefreshUctExpires) {
           await userStore.refreshUserToken()
           const authenticationScheme = config.headers.Authorization.split(' ')[0]
           // @ts-ignore
