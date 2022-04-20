@@ -7,6 +7,7 @@ export interface OSharpResponse {
 export interface OSharpPageResponse {
   Rows: Array<any>
   Total: number
+  Data?: OSharpPageResponse
 }
 
 export interface OSharpListPageResponse extends OSharpResponse {

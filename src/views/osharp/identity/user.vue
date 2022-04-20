@@ -93,9 +93,11 @@
       pageSize,
       filter: getFilterItems(searchForm),
     } as OSharpPageOption)
-    const {
-      Data: { Rows, Total },
-    } = await Read(body)
+    let { Rows, Total, Data } = await Read(body)
+    if (!Rows) {
+      Rows = Data?.Rows as Array<any>
+      Total = Data?.Total as number
+    }
     return { items: Rows, total: Total }
   }
 
