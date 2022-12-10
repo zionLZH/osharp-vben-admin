@@ -42,6 +42,15 @@ const dashboard: AppRouteModule = {
         modules: ['Pack.Read'],
       },
     },
+    {
+      path: 'codegen',
+      name: 'OsharpSystemsCodegen',
+      component: () => import('/@/views/codegen/index.vue'),
+      meta: {
+        // affix: true,
+        title: '代码生成器',
+      },
+    },
   ],
 }
 
