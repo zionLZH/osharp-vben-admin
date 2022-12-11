@@ -3,13 +3,13 @@ function getTemplate(url, method, hasData, hasParam, returnType) {
   let params = []
   hasData && params.push('data: any')
   hasParam && params.push('params: any')
-  context.push(             ``)
-  context.push(             `export function ${url}(${params.join(', ')}) {`)
-  context.push(             `  return defHttp.${method}<${returnType}>({`)
-  context.push(             `  url: Route + '${url}',`)
-  hasData && context.push(  `  data,`)
-  hasParam && context.push( `  params,`)
-  context.push(             `})`)
+  context.push(``)
+  context.push(`export function ${url}(${params.join(', ')}) {`)
+  context.push(`  return defHttp.${method}<${returnType}>({`)
+  context.push(`  url: Route + '${url}',`)
+  hasData && context.push(`  data,`)
+  hasParam && context.push(`  params,`)
+  context.push(`})`)
   return context.join('\r\n')
 }
 
@@ -19,17 +19,9 @@ export function apiFileCodegen(entity, prefixRoute) {
   context.push(`import { OSharpPageResponse, OSharpResponse } from '@/api/model/osharpModel'`)
   context.push(``)
   context.push(`const Route = '${prefixRoute}/${entity.Name}/'`)
-  context.push(
-    getTemplate('read', 'post', true, false, 'OSharpPageResponse')
-  )
-  context.push(
-    getTemplate('create', 'post', true, false, 'OSharpResponse')
-  )
-  context.push(
-    getTemplate('update', 'post', true, false, 'OSharpResponse')
-  )
-  context.push(
-    getTemplate('delete', 'post', true, false, 'OSharpResponse')
-  )
+  context.push(getTemplate('read', 'post', true, false, 'OSharpPageResponse'))
+  context.push(getTemplate('create', 'post', true, false, 'OSharpResponse'))
+  context.push(getTemplate('update', 'post', true, false, 'OSharpResponse'))
+  context.push(getTemplate('delete', 'post', true, false, 'OSharpResponse'))
   return context.join('\r\n')
 }
