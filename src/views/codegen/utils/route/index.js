@@ -24,7 +24,7 @@ export function routeFileCodegen(module, moduleName) {
   context.push(`  meta: {`)
   context.push(`    orderNo: 10,`)
   context.push(`    icon: 'ion:grid-outline',`)
-  context.push(`    title: '权限安全',`)
+  context.push(`    title: '${module.Display}',`)
   context.push(`  },`)
   context.push(`  children: [`)
   for (let entity of module.Entities) {
@@ -37,8 +37,8 @@ export function routeFileCodegen(module, moduleName) {
     )
     context.push(`      meta: {`)
     context.push(`        // affix: true,`)
-    context.push(`        title: '${entityName}',`)
-    context.push(`        modules: ['${entityName}.read'],`)
+    context.push(`        title: '${entity.Display}',`)
+    // context.push(`        modules: ['${entityName}.read'],`)
     context.push(`      },`)
     context.push(`    },`)
   }

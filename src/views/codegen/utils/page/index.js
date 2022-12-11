@@ -147,6 +147,7 @@ function pageDataConfFileCodegen(entity, moduleName) {
       )
     }
   }
+  FilterKeys = [...new Set(FilterKeys)]
   template = template.replace(/#\{FilterItems}/gi, FilterItems.join('\r\n'))
   template = template.replace(/#\{FilterKeys}/gi, FilterKeys.join(', '))
 
