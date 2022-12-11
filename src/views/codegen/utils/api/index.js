@@ -9,7 +9,8 @@ function getTemplate(url, method, hasData, hasParam, returnType) {
   context.push(`  url: Route + '${url}',`)
   hasData && context.push(`  data,`)
   hasParam && context.push(`  params,`)
-  context.push(`})`)
+  context.push(`  })`)
+  context.push(`}`)
   return context.join('\r\n')
 }
 
@@ -23,5 +24,6 @@ export function apiFileCodegen(entity, prefixRoute) {
   context.push(getTemplate('Create', 'post', true, false, 'OSharpResponse'))
   context.push(getTemplate('Update', 'post', true, false, 'OSharpResponse'))
   context.push(getTemplate('Delete', 'post', true, false, 'OSharpResponse'))
+  context.push(getTemplate('ReadOne', 'get', false, true, 'OSharpResponse'))
   return context.join('\r\n')
 }

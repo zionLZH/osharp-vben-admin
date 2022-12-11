@@ -7,7 +7,7 @@ function listFileCodegen(entity, moduleName) {
   let template = listFileTemplate + ''
   template = template.replace(/#\{Entity}/gi, entityName)
   let apiFilePath = `api/${moduleName}/${entityName}`
-  template = template.replace(/#\{ApiFile}/gi, entityName)
+  template = template.replace(/#\{ApiFile}/gi, apiFilePath)
   return template
 }
 
@@ -16,7 +16,7 @@ function dtlModalFileCodegen(entity, moduleName) {
   let template = dtlModalFileTemplate + ''
   template = template.replace(/#\{Entity}/gi, entityName)
   let apiFilePath = `api/${moduleName}/${entityName}`
-  template = template.replace(/#\{ApiFile}/gi, entityName)
+  template = template.replace(/#\{ApiFile}/gi, apiFilePath)
   return template
 }
 

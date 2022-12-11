@@ -69,7 +69,7 @@ export const dtlModalFileTemplate = `<template>
   async function getDetail(payload) {
     setModalProps({ loading: true })
     try {
-      let { Data } = await ReadOne(payload)
+      let { Data } = await ReadOne({ Id: payload })
       detail.value = Data
       formMethods.setFieldsValue(Data)
     } finally {

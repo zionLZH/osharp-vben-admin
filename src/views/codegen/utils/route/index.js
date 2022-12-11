@@ -38,7 +38,7 @@ export function routeFileCodegen(module, moduleName) {
     context.push(`      meta: {`)
     context.push(`        // affix: true,`)
     context.push(`        title: '${entity.Display}',`)
-    // context.push(`        modules: ['${entityName}.read'],`)
+    context.push(`        modules: ['${entityName}.read'],`)
     context.push(`      },`)
     context.push(`    },`)
   }
