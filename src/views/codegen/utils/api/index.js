@@ -19,9 +19,9 @@ export function apiFileCodegen(entity, prefixRoute) {
   context.push(`import { OSharpPageResponse, OSharpResponse } from '@/api/model/osharpModel'`)
   context.push(``)
   context.push(`const Route = '${prefixRoute}/${entity.Name}/'`)
-  context.push(getTemplate('read', 'post', true, false, 'OSharpPageResponse'))
-  context.push(getTemplate('create', 'post', true, false, 'OSharpResponse'))
-  context.push(getTemplate('update', 'post', true, false, 'OSharpResponse'))
-  context.push(getTemplate('delete', 'post', true, false, 'OSharpResponse'))
+  context.push(getTemplate('Read', 'post', true, false, 'OSharpPageResponse'))
+  context.push(getTemplate('Create', 'post', true, false, 'OSharpResponse'))
+  context.push(getTemplate('Update', 'post', true, false, 'OSharpResponse'))
+  context.push(getTemplate('Delete', 'post', true, false, 'OSharpResponse'))
   return context.join('\r\n')
 }
