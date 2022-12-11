@@ -57,6 +57,7 @@ function pageDataConfFileCodegen(entity, moduleName) {
     }
     ColumnsText.push(`  },`)
   }
+  template = template.replace(/#\{Columns}/gi, ColumnsText.join('\r\n'))
 
   // 生成列表搜索项目
   let FormSchemas = []
@@ -124,6 +125,128 @@ function pageDataConfFileCodegen(entity, moduleName) {
     FormSchemas.push(`    },`)
   }
   template = template.replace(/#\{FormSchemas}/gi, FormSchemas.join('\r\n'))
+
+  // 生成列表搜索项目
+  let FilterItems = []
+  let FilterKeys = []
+  for (let Properties of entity.Properties) {
+    const foreignConf = ForeignsMap[Properties.TypeName]
+    if (Properties.IsNavigation) {
+      if (!foreignConf) {
+        continue
+      }
+    }
+    if (!Properties.IsNavigation) {
+      FilterKeys.push(Properties.Name)
+      FilterItems.push(`    { key: '${Properties.Name}', type: '=', value: ${Properties.Name} },`)
+    } else {
+      // 外键
+      FilterKeys.push(foreignConf.SelfForeignKey)
+      FilterItems.push(
+        `    { key: '${foreignConf.SelfForeignKey}', type: '=', value: ${foreignConf.SelfForeignKey} },`,
+      )
+    }
+  }
+  template = template.replace(/#\{FilterItems}/gi, FilterItems.join('\r\n'))
+  template = template.replace(/#\{FilterKeys}/gi, FilterKeys.join(', '))
+
+  // 生成详情表单项目
+  let DetailFormConfig = []
+  for (let Properties of entity.Properties) {
+    const foreignConf = ForeignsMap[Properties.TypeName]
+    if (Properties.IsNavigation) {
+      if (!foreignConf) {
+        continue
+      }
+    }
+    if (Properties.Name === 'Id') {
+      // Id直接占位，一般不需要显示的
+      DetailFormConfig.push(`    createHolderProps('Id'),`)
+      continue
+    }
+    const PropertiesTypeName = Properties.TypeName
+    const PropertiesDisplay = Properties.Display
+    const PropertiesRequired = Properties.IsRequired
+    if (!Properties.IsNavigation) {
+      // 根据数据类型决定是否需要自定义渲染
+      switch (Properties.TypeName) {
+        case 'System.DateTime':
+          DetailFormConfig.push(`    {
+      field: '${PropertiesTypeName}',
+      label: '${PropertiesDisplay}',
+      component: 'DatePicker',
+      defaultValue: '',
+      colProps: { span: 24 },
+      componentProps: {
+        style: {
+          width: '100%',
+        },
+        valueFormat: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD',
+      },
+      rules: ${PropertiesRequired ? '[createRequireFormRule()]' : '[]'},
+    },`)
+          break
+        case '':
+          DetailFormConfig.push(`{
+      field: '${PropertiesTypeName}',
+      label: '${PropertiesDisplay}',
+      component: 'Switch',
+      defaultValue: false,
+      colProps: { span: 24 },
+      rules: ${PropertiesRequired ? '[createRequireFormRule()]' : '[]'},
+    },`)
+          break
+        case 'System.Int32':
+        case 'System.Double':
+        case 'System.Int64':
+          DetailFormConfig.push(`    {
+      field: '${PropertiesTypeName}',
+      label: '${PropertiesDisplay}',
+      component: 'InputNumber',
+      defaultValue: 0,
+      colProps: { span: 24 },
+      rules: ${PropertiesRequired ? '[createRequireFormRule()]' : '[]'},
+    },`)
+          break
+        case 'System.String':
+        default:
+          // 文本和其他默认都走输入框
+          DetailFormConfig.push(`    {
+      field: \`${PropertiesTypeName}\`,
+      label: \`${PropertiesDisplay}\`,
+      component: \`Input\`,
+      componentProps: {},
+      defaultValue: '',
+      colProps: { span: 24 },
+      rules: ${PropertiesRequired ? '[createRequireFormRule()]' : '[]'},
+    },`)
+          break
+      }
+    } else {
+      // 外键
+      DetailFormConfig.push(`    {
+      field: '${foreignConf.SelfForeignKey}',
+      label: '${PropertiesDisplay}',
+      component: 'ApiSelect',
+      defaultValue: '',
+      componentProps: {
+        api: async () => {
+          // const res = await Api(data),
+          // 返回结构为[{ Name, Id }]
+          // return res
+          return []
+        },
+        showSearch: true,
+        optionFilterProp: 'label',
+        resultField: 'Data',
+        labelField: 'Name',
+        valueField: 'Id',
+      },
+    },`)
+    }
+  }
+  template = template.replace(/#\{DetailFormConfig}/gi, DetailFormConfig.join('\r\n'))
   return template
 }
 
