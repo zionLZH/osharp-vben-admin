@@ -58,7 +58,7 @@ export const dtlModalFileTemplate = `<template>
         ...values,
       }
       const apier = submitData.Id ? Update : Create
-      await apier(submitData)
+      await apier([submitData])
       createSuccessModal({ content: '操作完成' })
       closeModal()
     } finally {

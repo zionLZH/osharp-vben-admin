@@ -165,6 +165,7 @@ function pageDataConfFileCodegen(entity, moduleName) {
       DetailFormConfig.push(`    createHolderProps('Id'),`)
       continue
     }
+    const PropertiesName = Properties.Name
     const PropertiesTypeName = Properties.TypeName
     const PropertiesDisplay = Properties.Display
     const PropertiesRequired = Properties.IsRequired
@@ -173,7 +174,7 @@ function pageDataConfFileCodegen(entity, moduleName) {
       switch (Properties.TypeName) {
         case 'System.DateTime':
           DetailFormConfig.push(`    {
-      field: '${PropertiesTypeName}',
+      field: '${PropertiesName}',
       label: '${PropertiesDisplay}',
       component: 'DatePicker',
       defaultValue: '',
@@ -190,7 +191,7 @@ function pageDataConfFileCodegen(entity, moduleName) {
           break
         case '':
           DetailFormConfig.push(`{
-      field: '${PropertiesTypeName}',
+      field: '${PropertiesName}',
       label: '${PropertiesDisplay}',
       component: 'Switch',
       defaultValue: false,
@@ -202,7 +203,7 @@ function pageDataConfFileCodegen(entity, moduleName) {
         case 'System.Double':
         case 'System.Int64':
           DetailFormConfig.push(`    {
-      field: '${PropertiesTypeName}',
+      field: '${PropertiesName}',
       label: '${PropertiesDisplay}',
       component: 'InputNumber',
       defaultValue: 0,
@@ -214,7 +215,7 @@ function pageDataConfFileCodegen(entity, moduleName) {
         default:
           // 文本和其他默认都走输入框
           DetailFormConfig.push(`    {
-      field: \`${PropertiesTypeName}\`,
+      field: \`${PropertiesName}\`,
       label: \`${PropertiesDisplay}\`,
       component: \`Input\`,
       componentProps: {},

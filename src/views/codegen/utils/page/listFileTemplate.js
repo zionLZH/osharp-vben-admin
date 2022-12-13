@@ -42,6 +42,7 @@ export const listFileTemplate = `<template>
   import { Read, Delete } from '/@/#{ApiFile}'
   import { Colums, FormConfig, ActionConfig, getFilterItems } from './data/#{Entity}'
   import { OSharpPageOption } from '/@/utils/osharp/types/page'
+  import { makeOSharpPage } from '/@/utils/osharp'
   import { Authority } from '/@/components/Authority'
   import DtlDialog from './modal/#{Entity}Dtl.vue'
   import { useMessage } from '../../../hooks/web/useMessage'
@@ -69,7 +70,7 @@ export const listFileTemplate = `<template>
     const body = makeOSharpPage({
       pageIndex: page,
       pageSize,
-      sort: {}, // { key: 'Code', type: 'up' },
+      sort: { key: 'Id', type: 'up' },
       filter: getFilterItems(searchForm),
     } as OSharpPageOption)
     const {
