@@ -138,12 +138,6 @@ async logout(goLogin = false) {
 
 [@ZionLin](https://github.com/zionLZH)
 
-## 捐赠
-
-如果你觉得这个项目对你有帮助，你可以帮作者买一杯咖啡表示支持!
-
-![donate](https://public-1251222689.cos.ap-guangzhou.myqcloud.com/zionlin.png)
-
 ## License
 
 [MIT](./LICENSE)
