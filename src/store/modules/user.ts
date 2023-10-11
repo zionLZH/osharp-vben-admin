@@ -180,6 +180,7 @@ export const useUserStore = defineStore({
     async refreshUserToken(): Promise<any> {
       if (refreshTokenHolder) {
         await refreshTokenHolder
+        refreshTokenHolder = null
         return
       }
       refreshTokenHolder = new Promise(async (next: any) => {
@@ -198,6 +199,7 @@ export const useUserStore = defineStore({
         }
       })
       await refreshTokenHolder
+      refreshTokenHolder = null
     },
     async isRefreshUserTokenNow() {
       return !!refreshTokenHolder
