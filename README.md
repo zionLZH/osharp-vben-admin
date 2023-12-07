@@ -5,6 +5,10 @@
 <h1>OSharp vben admin</h1>
 </div>
 
+### 暂停维护
+
+当前代码暂停维护，请使用最新版本osharp的开发者转向[ZhiMiTec/osharp-vben-admin](https://github.com/ZhiMiTec/osharp-vben-admin),新版依然由我维护，新版同步升级至vben 2.10，拥有更佳的开发体验
+
 ## 简介
 
 OSharp Vben Admin 是一个免费开源的中后台模版。基于 vue-vben-admin 开发，对接 osharp 后端，开箱即用，内置 osharp 用户，权限，系统管理模块与辅助工具类，使得 osharp 后台对接工作得以简化。
